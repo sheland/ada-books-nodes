@@ -1,19 +1,32 @@
 require "test_helper"
 
 describe SessionsController do
-  it "should get login" do
-    get sessions_login_url
-    value(response).must_be :success?
+  it "login form" do
+    get login_path
+
+    must_respond_with :success
   end
 
-  it "should get new" do
-    get sessions_new_url
-    value(response).must_be :success?
-  end
+  describe "login action" do
+    it  "can create a new user" do
+      user_hash = {
+        author: {
+          name: "Katie"
+        }
+      }
 
-  it "should get destroy" do
-    get sessions_destroy_url
-    value(response).must_be :success?
-  end
+      expect {
+        post login_path, params: user_hash
+      }.must_change "Author.count", 1
 
-end
+      new_author = Author.find_by(name: user_hash[:author][:name]
+
+      expect(new_author).wont_be_nil
+      expect(session[:user_id])
+    end
+
+    it "should log in existing user without changing"
+    end
+
+    it "shoud give a bad request for an invalid author"
+    end 
