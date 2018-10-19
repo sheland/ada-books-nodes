@@ -25,7 +25,12 @@
             </div>
           <% end %>
         <% end %>
-
+        <% if session[:user_id] %>
+          <%= link_to "Log out", logout_path, method: "delete"   %>
+        <% else %>
+          <%= link_to "Login with Github", "/auth/github" %>
+        <% end %>
+        
         <% if @current_user %>
           <h2>Welcome <%= @current_user.name %> </h2>
         <% end %>
